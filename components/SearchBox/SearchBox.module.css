@@ -1,0 +1,18 @@
+.input {
+  flex: 1;
+  max-width: 240px;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid #808080;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgb(255, 107, 10);
+}
+
+.input::placeholder {
+  color: #adb5bd;
+}
