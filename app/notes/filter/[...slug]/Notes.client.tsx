@@ -12,15 +12,15 @@ import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import css from './page.module.css';
 
-const NoteClient = () => {
+const NoteClient = ({ tag }: { tag?: string }) => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
   const { data, isSuccess } = useQuery({
-    queryKey: ['notes', debouncedSearch, page],
-    queryFn: () => fetchNotes(debouncedSearch, page),
+    queryKey: ['notes', debouncedSearch, page, tag],
+    queryFn: () => fetchNotes(debouncedSearch, page, tag),
     placeholderData: keepPreviousData,
   });
 

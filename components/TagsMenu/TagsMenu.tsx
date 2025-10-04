@@ -1,20 +1,44 @@
+'use client';
+
 import css from './TagsMenu.module.css';
+import Link from 'next/link';
+import { useState } from 'react';
+import { tags } from '@/constants/tags';
 
 const TagsMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
     <div className={css.menuContainer}>
-      <button className={css.menuButton}>Notes ▾</button>
-      <ul className={css.menuList}>
-        {/* список тегів */}
-        <li className={css.menuItem}>
-          <a
-            href={`url до сторінки за відповідним тегом`}
-            className={css.menuLink}
-          >
-            Назва тегу
-          </a>
-        </li>
-      </ul>
+      <button
+        onClick={toggle}
+        className={css.menuButton}
+      >
+        Notes ▾
+      </button>
+      {isOpen && (
+        <ul className={css.menuList}>
+          {tags.map((tag) => {
+            const url =
+              tag === 'All' ? '/notes/filter/All' : `/notes/filter/${tag}`;
+            return (
+              <li
+                key={tag}
+                className={css.menuItem}
+              >
+                <Link
+                  onClick={toggle}
+                  href={url}
+                  className={css.menuLink}
+                >
+                  {tag}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };

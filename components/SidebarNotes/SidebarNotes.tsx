@@ -1,18 +1,28 @@
+import { tags } from '@/constants/tags';
 import css from './SidebarNotes.module.css';
+import Link from 'next/link';
 
 const SidebarNotes = () => {
   return (
     <>
       <ul className={css.menuList}>
-        {/* список тегів */}
-        <li className={css.menuItem}>
-          <a
-            href={`url до сторінки за відповідним тегом`}
-            className={css.menuLink}
-          >
-            Назва тегу
-          </a>
-        </li>
+        {tags.map((tag) => {
+          const url =
+            tag === 'All' ? '/notes/filter/All' : `/notes/filter/${tag}`;
+          return (
+            <li
+              key={tag}
+              className={css.menuItem}
+            >
+              <Link
+                href={url}
+                className={css.menuLink}
+              >
+                {tag}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </>
   );

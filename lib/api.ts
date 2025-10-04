@@ -19,12 +19,13 @@ interface NewNoteContent {
 export const fetchNotes = async (
   search: string,
   page: number,
-  perPage = 12
+  tag?: string
 ): Promise<NoteHttpRequest> => {
   const params = {
     search,
     page,
-    perPage,
+    perPage: 12,
+    tag,
   };
 
   const res = await axios.get<NoteHttpRequest>('', { params });
