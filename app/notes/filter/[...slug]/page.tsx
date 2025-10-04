@@ -1,5 +1,4 @@
 import { fetchNotes } from '@/lib/api';
-import { NoteTag } from '@/types/note';
 import {
   dehydrate,
   HydrationBoundary,
