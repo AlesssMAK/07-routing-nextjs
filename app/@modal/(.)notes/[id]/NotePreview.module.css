@@ -30,7 +30,7 @@
 .content {
   font-size: 18px;
   line-height: 26px;
-  color: #444;
+  color: rgb(255, 107, 10);
   white-space: pre-wrap;
 }
 
@@ -65,4 +65,9 @@
   text-decoration: underline;
   display: inline-block;
   background-color: transparent;
+  transition: color 0.2s ease;
+}
+
+.backBtn:hover {
+  color: rgb(255, 107, 10);
 }
