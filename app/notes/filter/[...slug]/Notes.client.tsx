@@ -2,8 +2,8 @@
 
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
-import { useEffect, useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import { useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import { fetchNotes } from '@/lib/api';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
@@ -11,6 +11,7 @@ import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import css from './page.module.css';
+import Text from '@/components/Text/Text';
 
 const NoteClient = ({ tag }: { tag?: string }) => {
   const [search, setSearch] = useState<string>('');
@@ -18,17 +19,23 @@ const NoteClient = ({ tag }: { tag?: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearch] = useDebounce(search, 500);
 
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, isLoading, isFetching } = useQuery({
     queryKey: ['notes', debouncedSearch, page, tag],
     queryFn: () => fetchNotes(debouncedSearch, page, tag),
     placeholderData: keepPreviousData,
   });
 
-  useEffect(() => {
-    if (data?.notes.length === 0) {
-      toast.error('No notes found for your request.');
-    }
-  }, [data]);
+  if (!isLoading && !isFetching && data?.notes.length === 0) {
+    return (
+      <Text
+        textAlign="center"
+        marginBottom="20"
+      >
+        {' '}
+        No notes found for your request.{' '}
+      </Text>
+    );
+  }
 
   const openModal = () => setIsModalOpen(true);
 
